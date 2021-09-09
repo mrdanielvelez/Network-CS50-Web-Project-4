@@ -1,0 +1,111 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    
+    <section class="profile">
+        <header style="background-image: url( '{{ profile.header }}' );" class="header rounded">
+          <div class="details">
+            <img src="{{ profile.picture }}" alt="{{ profile }}'s Profile Picture" class="profile-pic mt-2">
+            <h1 class="heading py-1">
+                {{ profile.name }}
+                {% if user != profile %}
+                    <form action="{% url 'follow' profile %}" style="display: inline;" method="POST">
+                        {% csrf_token %}
+                        {% if user not in profile.followers.all %}
+                            <button class="btn btn-primary btn-sm rounded-pill align-top inline follow">Follow</button>
+                        {% else %}
+                            <button class="btn text-white btn-dark btn-sm rounded-pill align-top inline follow">Unfollow</button>
+                        {% endif %}
+                    </form>
+                {% endif %}
+            </h1>
+            <h6 id="pfusername" style="font-size: 75%; opacity: 80%;">@{{ profile.username }}</h6>
+            <div class="stats">
+              <div class="col-4">
+                <h4>{{ profile.following.all.count }}</h4>
+                <p>Following</p>
+              </div>
+              <div class="col-4">
+                <h4>{{ profile.followers.all.count }}</h4>
+                <p>Followers</p>
+              </div>
+              <div class="col-4">
+                <h4>{{ profile.posts.all.count }}</h4>
+                <p>Posts</p>
+              </div>
+            </div>
+          </div>
+        </header>
+    </section>
+
+    <br>
+
+    {% for post in page_obj %}
+        <div class="card rounded mb-4">
+            <div class="card-body">
+                <img src="{{ post.author.picture }}" alt="{{ post.author }}'s Profile Picture" width="40" height="40" class="rounded-circle">
+                <h5 class="card-title" style="display: inline-block; cursor: default;">
+                    {{ post.author.name }} <span style="font-size: 70%; opacity: 70%;">@{{ post.author.username }}</span>
+                    {% if user == post.author %}
+                        <a data-post-id="{{ post.id }}" class="edit btn btn-sm btn-outline-secondary align-top rounded">Edit</a>
+                    {% endif %}
+                </h5>
+                <h6 style="font-size: 85%; float: right;">{{ post.date|date:"F j, Y f A" }}</h6>
+                <br>
+                <p id="content{{ post.id }}" class="card-text pt-2">{{ post.content }}</p>
+            </div>
+            <div style="padding: 0 1rem 1rem 1rem;">
+                <img style="vertical-align: top;" width="20" height="20" src="{% static 'network/images/like.svg' %}" alt="Like">
+                <strong id="num-likes-{{ post.id }}">{{ post.likes.all.count }}</strong>
+            </div>
+            {% if user.is_authenticated %}
+                <div class="d-flex justify-content-evenly card-footer text-white text-center">
+                    <a data-post-id="{{ post.id }}" class="like post-action">
+                        <i class="bi-hand-thumbs-up"></i>
+                        {% if user not in post.likes.all %}
+                            <span>Like</span>
+                        {% else %}
+                            <span>Unlike</span>
+                        {% endif %}
+                    </a>
+                    <a class="post-action">
+                        <i class="bi-chat-square"></i>
+                        <span>Comment</span>
+                    </a>
+                    <a class="post-action">
+                        <i class="bi-share"></i>
+                        <span>Share</span>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <div>
+        {% if page_obj.paginator.num_pages > 1 %}
+            <span class="fs-4 text-white page py-2 float-end">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+        {% endif %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                            <span aria-hidden="true">Previous &laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                            <span aria-hidden="true">Next &raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+{% endblock %}

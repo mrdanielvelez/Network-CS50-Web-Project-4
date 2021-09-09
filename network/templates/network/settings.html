@@ -1,0 +1,30 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <h1 class="title">Settings</h1>
+
+    <br>
+
+    {% if message %}
+        <div class="pb-4">{{ message }}</div>
+    {% endif %}
+    
+    <form action="{% url 'settings' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input required maxlength="25" id="pf-name" type="text" class="form-control" name="display_name" value="{{ user.name }}">
+            <label for="pf-name" class="form-label">Display Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input required id="pfp-input" type="url" class="form-control" name="profile_pic" value="{{ user.picture }}">
+            <label for="pfp-input" class="form-label">Profile Picture URL</label>
+        </div>
+        <div class="form-floating mb-4">
+            <input required id="pfh-input" type="url" class="form-control" name="header_pic" value="{{ user.header }}">
+            <label for="pfh-input" class="form-label">Profile Header URL</label>
+        </div>
+        <button type="submit" class="btn btn-primary px-5">Save</button>
+    </form>
+
+{% endblock %}

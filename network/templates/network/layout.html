@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}CS50 Network{% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'network/favicon_io/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'network/favicon_io/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'network/favicon_io/favicon-16x16.png' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Sora&display=swap" rel="stylesheet">
+        <link rel="manifest" href="{% static 'network/favicon_io/site.webmanifest' %}">
+        <link href="{% static 'network/styles/styles.css' %}" rel="stylesheet">
+        <script src="{% static 'network/scripts/network.js' %}"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body class="container-fluid">
+        <div class="row flex-nowrap">
+            <div id="nav" class="col-2 px-0 bg-dark">
+                <div class="nav sticky-top d-flex flex-column px-3 pt-2 min-vh-100">
+                    <a href="{% url 'index' %}" class="navbar-brand text-white pt-4">
+                        <img id="logo" height="40" width="40" src="{% static 'network/images/logo.png' %}">
+                        <span class="fs-4 px-3">
+                            CS50 Network
+                        </span>
+                    </a>
+                    <hr style="color: white;">
+                    <ul class="navbar-nav px-3" id="menu">
+                            <li class="nav-item">
+                                <a href="{% url 'index' %}" class="nav-link px-0 align-middle">
+                                    <i class="fs-4 bi bi-stickies"></i>
+                                    <span class="ms-1 d-none d-sm-inline">All Posts</span>
+                                </a>
+                            </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a href="{% url 'following' %}" class="nav-link px-0 align-middle">
+                                    <i class="fs-4 bi bi-people-fill"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Following</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'logout' %}" class="nav-link px-0 align-middle">
+                                    <i class="fs-4 bi bi-box-arrow-left"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Logout</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a href="{% url 'login' %}" class="nav-link px-0 align-middle">
+                                    <i class="fs-4 bi bi-box-arrow-right"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Log In</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{% url 'register' %}" class="nav-link px-0 align-middle">
+                                    <i class="fs-4 bi bi-cloud-plus"></i>
+                                    <span class="ms-1 d-none d-sm-inline">Register</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <hr style="color: white;">
+                        <div class="dropdown py-2">
+                            <a style="cursor: pointer;" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img id="pfp" src="{{ user.picture }}" alt="{{ user.username }}'s Profile Picture" width="50" height="50" class="rounded-circle">
+                                <span class="d-none d-sm-inline mx-1">@{{ user.username }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="dropdown">
+                                <li>
+                                    <a id="write-post" class="dropdown-item">
+                                        <i class="bi-pencil-square"></i>
+                                        New post...
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'profile' user.username %}">
+                                        <i class="bi-person-square"></i>
+                                        Profile
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'settings' %}">
+                                        <i class="bi-gear"></i>
+                                        Settings
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div id="main" class="col">
+                {% block body %}
+                {% endblock %}
+            </div>
+            <div class="col-2 px-0 bg-dark">
+                <div class="nav sticky-top d-flex flex-column px-3 pt-2 min-vh-100">
+                    <span class="fs-4 pt-4 pb-2 text-white text-center">
+                            Suggested Content
+                    </span>
+                    <br>
+                    <div class="card mb-3">
+                        <img src="https://i.ytimg.com/vi/x5trGVMKTdY/maxresdefault.jpg" class="card-img-top" alt="Harvard CS50 Web">
+                        <div class="card-body">
+                          <h5 class="card-title">Harvard CS50 Web Programming with Python and JavaScript</h5>
+                          <p class="card-text" style="font-size: 80%;">This course picks up where CS50 leaves off, diving more deeply into the design and implementation of web apps with Python, JavaScript, and SQL using frameworks like Django, React, and Bootstrap.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <img src="https://prod-discovery.edx-cdn.org/media/course/image/3a31db71-de8f-45f1-ae65-11981ed9d680-31634d40b3bb.small.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h5 class="card-title">CS50's Introduction to Artificial Intelligence with Python</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

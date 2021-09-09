@@ -1,0 +1,42 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+
+    <h1 class="title">Register</h1>
+
+    <br>
+
+    {% if message %}
+        <div class="pb-4">{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input autofocus type="text" class="form-control" name="name" id="name-input">
+            <label for="name-input" class="form-label">Display Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="username" id="username-input">
+            <label for="username-input" class="form-label">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="email-input" type="email" class="form-control" name="email">
+            <label for="email-input" class="form-label">Email Address</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="password-input" type="password" class="form-control" name="password" id="password-input">
+            <label for="password-input" class="form-label">Password</label>
+        </div>
+        <div class="form-floating mb-4">
+            <input id="confirmation" type="password" class="form-control" name="confirmation" id="password-input">
+            <label for="confirmation" class="form-label">Confirm Password</label>
+        </div>
+        <button type="submit" class="btn btn-primary px-5">Register</button>
+    </form>
+
+    <br>
+
+    Already have an account? <a href="{% url 'login' %}" style="text-decoration: none;">Log In here.</a>
+
+{% endblock %}

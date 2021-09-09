@@ -1,0 +1,140 @@
+.bi {
+    margin-right: 0.75rem;
+}
+
+.nav-link {
+    color: white;
+}
+
+.nav-link:hover, .nav-link:focus {
+    color: #a5a5a5;
+}
+
+.nav {
+    font-size: 1.25rem;
+}
+
+#pfp {
+    margin-right: 10px;
+}
+
+.dropdown-menu i {
+    margin-right: 5px;
+}
+
+.dropdown-menu {
+    font-size: 1.1rem;
+}
+
+.title {
+    color: white;
+    text-align: center;
+}
+
+#write-post {
+    cursor: pointer;
+}
+
+#main {
+    background: url(../images/background.jpg) no-repeat; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding: 2rem 4rem;
+}
+
+#new-post, #edit-post {
+    height: 12vh;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.75);
+    border: none;
+}
+
+.post-action {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    width: 10rem;
+}
+
+.post-action > i {
+    margin-right: 0.5rem;
+}
+
+.page-link {
+    width: 10rem;
+    text-align: center;
+}
+
+.profile-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.profile-link:hover {
+    color: inherit;
+}
+
+.follow {
+    width: 5rem;
+}
+
+.card {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.card-body > img {
+    margin-right: 2px;
+}
+
+.messages {
+    font-size: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    display: inline;
+}
+
+.profile {
+    cursor: default;
+}
+
+.header {
+  min-height: 25vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.details {
+  text-align: center;
+}
+
+.profile-pic {
+  height: 6rem;
+  width: 6rem;
+  object-fit: center;
+  border-radius: 50%;
+}
+
+.stats {
+  display: flex;
+}
+
+.stats .col-4 {
+  width: 10rem;
+  text-align: center;
+}
+
+.heading {
+  font-size: 1.5rem;
+}
+
+.heading, .stats, .title, .follow, .page, #pfusername {
+    text-shadow: 1px 1px 2px #000;
+}
